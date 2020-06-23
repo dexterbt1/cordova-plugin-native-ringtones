@@ -41,8 +41,10 @@ public class NativeRingtones extends CordovaPlugin {
         return false;
     }
 
-  private boolean get(String ringtoneType, final CallbackContext callbackContext) throws JSONException{
+    private boolean get(String ringtoneType, final CallbackContext callbackContext) throws JSONException{
         RingtoneManager manager = new RingtoneManager(this.cordova.getActivity().getBaseContext());
+
+        JSONArray ringtoneList = new JSONArray();
 
         //The default value if ringtone type is "notification"
         if (ringtoneType.equals("alarm")) {
@@ -51,10 +53,15 @@ public class NativeRingtones extends CordovaPlugin {
             manager.setType(RingtoneManager.TYPE_RINGTONE);
         } else {
             manager.setType(RingtoneManager.TYPE_NOTIFICATION);
+
+            // first element as the default notification sound
+            JSONObject defson = new JSONObject();
+            defjson.put("Name", "__DEFAULT__");
+            defjson.put("Url", RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+            ringtoneList.put(defjson);
         }
 
         Cursor cursor = manager.getCursor();
-        JSONArray ringtoneList = new JSONArray();
 
         while (cursor.moveToNext()) {
             String notificationTitle = cursor.getString(RingtoneManager.TITLE_COLUMN_INDEX);
