@@ -55,7 +55,7 @@ public class NativeRingtones extends CordovaPlugin {
             manager.setType(RingtoneManager.TYPE_NOTIFICATION);
 
             // first element as the default notification sound
-            JSONObject defson = new JSONObject();
+            JSONObject defjson = new JSONObject();
             defjson.put("Name", "__DEFAULT__");
             defjson.put("Url", RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
             ringtoneList.put(defjson);
